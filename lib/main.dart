@@ -58,7 +58,12 @@ class _HomePageState extends State<HomePage> {
         title: Text("Poke App"),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          setState(() {
+            pokehub = null;
+            fetchData();
+          });
+        },
         child: Icon(Icons.refresh),
       ),
       body: (pokehub != null)
