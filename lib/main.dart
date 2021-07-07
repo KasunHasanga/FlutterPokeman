@@ -71,7 +71,7 @@ class _HomePageState extends State<HomePage> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => PokeDetails( pokemon: poke,)));
+                                    builder: (context) => PokeDetail( pokemon: poke,)));
                           },
                           child: Card(
                             child: Column(
