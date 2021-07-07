@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:Flutter/PokeManDetails.dart';
 import 'package:Flutter/pokeman.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -46,9 +47,7 @@ class _HomePageState extends State<HomePage> {
     var res = await http.get(url);
     var decodedJson = jsonDecode(res.body);
     pokehub = PokeHub.fromJson(decodedJson);
-    setState(() {
-
-    });
+    setState(() {});
   }
 
   @override
@@ -67,29 +66,33 @@ class _HomePageState extends State<HomePage> {
               children: pokehub.pokemon
                   .map((poke) => Padding(
                         padding: const EdgeInsets.all(2.0),
-                        child: Card(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                            Container(
-                              height: 100,
-                              width: 100,
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  image: NetworkImage(
-                                    poke.img
-                                  )
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => PokeDetails( pokemon: poke,)));
+                          },
+                          child: Card(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Container(
+                                  height: 100,
+                                  width: 100,
+                                  decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                          image: NetworkImage(poke.img))),
+                                ),
+                                Text(
+                                  poke.name,
+                                  style: TextStyle(
+                                      fontSize: 20.0,
+                                      fontWeight: FontWeight.bold),
                                 )
-                              ),
+                              ],
                             ),
-                            Text(poke.name,
-
-                              style: TextStyle(
-                                fontSize: 20.0,
-                                fontWeight: FontWeight.bold
-                              ),
-                            )
-                          ],),
+                          ),
                         ),
                       ))
                   .toList(),
