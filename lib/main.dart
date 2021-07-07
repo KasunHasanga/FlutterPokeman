@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:Flutter/PokeManDetails.dart';
 import 'package:Flutter/pokeman.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -73,24 +74,29 @@ class _HomePageState extends State<HomePage> {
                                 MaterialPageRoute(
                                     builder: (context) => PokeDetail( pokemon: poke,)));
                           },
-                          child: Card(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Container(
-                                  height: 100,
-                                  width: 100,
-                                  decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                          image: NetworkImage(poke.img))),
-                                ),
-                                Text(
-                                  poke.name,
-                                  style: TextStyle(
-                                      fontSize: 20.0,
-                                      fontWeight: FontWeight.bold),
-                                )
-                              ],
+                          child: Hero(
+                            tag: poke.img,
+                            child: Card(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Container(
+                                    height: 100,
+                                    width: 100,child: CachedNetworkImage(
+                                imageUrl: poke.img,
+                                placeholder: (context, url) => new CircularProgressIndicator(),
+                                errorWidget: (context, url, error) => new Icon(Icons.error),
+                              ),
+
+                                  ),
+                                  Text(
+                                    poke.name,
+                                    style: TextStyle(
+                                        fontSize: 20.0,
+                                        fontWeight: FontWeight.bold),
+                                  )
+                                ],
+                              ),
                             ),
                           ),
                         ),
